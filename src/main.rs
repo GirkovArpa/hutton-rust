@@ -25,13 +25,26 @@ fn encrypt(input: &str, password: &str, key: &str) -> String {
     let abc = String::from("abcdefghijklmnopqrstuvwxyz");
     let mut alphabet_key = create_key(&key, &abc);
     let mut output = String::new();
-    for (i, c) in input.char_indices() {
+
+    let mut password = String::from(password);
+
+    for (i, input_char) in input.char_indices() {
         let password_char = password.chars().nth(0).unwrap();
         let password_number = abc.find(password_char).unwrap();
         let alphabet_key_char = alphabet_key.chars().nth(0).unwrap();
         let alphabet_key_number = abc.find(alphabet_key_char).unwrap();
+        let shift = password_number + alphabet_key_number + 2;
+
+        let input_char_number = alphabet_key.find(input_char).unwrap();
+        let output_char_number = (shift + input_char_number) % 26;
+        let output_char = alphabet_key.chars().nth(output_char_number).unwrap();
+        let input_char_number_b = alphabet_key.find(input_char).unwrap();
+
+        password = rotate_string(&password);
+        output += &output_char.to_string();
+        alphabet_key = swap_chars(&alphabet_key, input_char_number_b, output_char_number);
     }
-    abc
+    output
 }
 
 fn rotate_string(input: &str) -> String {
