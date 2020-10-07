@@ -1,37 +1,6 @@
 use std::collections::HashSet; // for removing dupe chars from string
 
-fn main() {
-    test();
-}
-
-fn test() {
-    let input = String::from("foo");
-    let output = swap_chars(&input, 0, 2);
-    println!("{}", output);
-
-    let input = String::from("foo");
-    let output = rotate_string(&input);
-    println!("{}", output);
-
-    let input = String::from("foo");
-    let abc = String::from("abcdefghijklmnopqrstuvwxyz");
-    let output = create_key(&input, &abc);
-    println!("{}", output);
-
-    let input = String::from("helloworld");
-    let password = String::from("foo");
-    let key = String::from("bar");
-    let output = encrypt(&input, &password, &key, false);
-    println!("{}", output);
-
-    let input = String::from("pwckfenttc");
-    let password = String::from("foo");
-    let key = String::from("bar");
-    let output = encrypt(&input, &password, &key, true);
-    println!("{}", output);
-}
-
-fn encrypt(input: &str, password: &str, key: &str, decrypt: bool) -> String {
+pub fn encrypt(input: &str, password: &str, key: &str, decrypt: bool) -> String {
     let abc = String::from("abcdefghijklmnopqrstuvwxyz");
     let mut alphabet_key = create_key(&key, &abc);
     let mut output = String::new();
