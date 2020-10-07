@@ -26,7 +26,10 @@ fn encrypt(input: &str, password: &str, key: &str) -> String {
     let mut alphabet_key = create_key(&key, &abc);
     let mut output = String::new();
     for (i, c) in input.char_indices() {
-        
+        let password_char = password.chars().nth(0).unwrap();
+        let password_number = abc.find(password_char).unwrap();
+        let alphabet_key_char = alphabet_key.chars().nth(0).unwrap();
+        let alphabet_key_number = abc.find(alphabet_key_char).unwrap();
     }
     abc
 }
