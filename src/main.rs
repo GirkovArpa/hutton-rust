@@ -23,6 +23,12 @@ fn test() {
     let key = String::from("bar");
     let output = encrypt(&input, &password, &key, false);
     println!("{}", output);
+
+    let input = String::from("pwckfenttc");
+    let password = String::from("foo");
+    let key = String::from("bar");
+    let output = encrypt(&input, &password, &key, true);
+    println!("{}", output);
 }
 
 fn encrypt(input: &str, password: &str, key: &str, decrypt: bool) -> String {
@@ -39,16 +45,25 @@ fn encrypt(input: &str, password: &str, key: &str, decrypt: bool) -> String {
         let alphabet_key_number = abc.find(alphabet_key_char).unwrap();
         let mut shift: i64 = (password_number + alphabet_key_number + 2) as i64;
 
-        if decrypt { shift = -shift; }
+        if decrypt {
+            shift = -shift;
+        }
 
         let input_char_number = alphabet_key.find(input_char).unwrap();
         let output_char_number = (shift + (input_char_number as i64)).rem_euclid(26);
-        let output_char = alphabet_key.chars().nth(output_char_number as usize).unwrap();
+        let output_char = alphabet_key
+            .chars()
+            .nth(output_char_number as usize)
+            .unwrap();
         let input_char_number_b = alphabet_key.find(input_char).unwrap();
 
         password = rotate_string(&password);
         output += &output_char.to_string();
-        alphabet_key = swap_chars(&alphabet_key, input_char_number_b, output_char_number as usize);
+        alphabet_key = swap_chars(
+            &alphabet_key,
+            input_char_number_b,
+            output_char_number as usize,
+        );
     }
     output
 }
