@@ -1,6 +1,6 @@
 # The Hutton Cipher
 
-The Hutton Cipher of [Eric Bond Hutton](https://old.reddit.com/EricBondHutton), implemented in Rust (as a crate).
+The Hutton Cipher of [Eric Bond Hutton](https://old.reddit.com/u/EricBondHutton), implemented in Rust (as a crate).
 
 ## Usage Example
 
