@@ -1,6 +1,10 @@
 use std::collections::HashSet; // for removing dupe chars from string
 
 fn main() {
+    test();
+}
+
+fn test() {
     let input = String::from("foo");
     let output = swap_chars(&input, 0, 2);
     println!("{}", output);
@@ -17,32 +21,34 @@ fn main() {
     let input = String::from("helloworld");
     let password = String::from("foo");
     let key = String::from("bar");
-    let output = encrypt(&input, &password, &key);
+    let output = encrypt(&input, &password, &key, false);
     println!("{}", output);
 }
 
-fn encrypt(input: &str, password: &str, key: &str) -> String {
+fn encrypt(input: &str, password: &str, key: &str, decrypt: bool) -> String {
     let abc = String::from("abcdefghijklmnopqrstuvwxyz");
     let mut alphabet_key = create_key(&key, &abc);
     let mut output = String::new();
 
     let mut password = String::from(password);
 
-    for (i, input_char) in input.char_indices() {
+    for (_, input_char) in input.char_indices() {
         let password_char = password.chars().nth(0).unwrap();
         let password_number = abc.find(password_char).unwrap();
         let alphabet_key_char = alphabet_key.chars().nth(0).unwrap();
         let alphabet_key_number = abc.find(alphabet_key_char).unwrap();
-        let shift = password_number + alphabet_key_number + 2;
+        let mut shift: i64 = (password_number + alphabet_key_number + 2) as i64;
+
+        if decrypt { shift = -shift; }
 
         let input_char_number = alphabet_key.find(input_char).unwrap();
-        let output_char_number = (shift + input_char_number) % 26;
-        let output_char = alphabet_key.chars().nth(output_char_number).unwrap();
+        let output_char_number = (shift + (input_char_number as i64)).rem_euclid(26);
+        let output_char = alphabet_key.chars().nth(output_char_number as usize).unwrap();
         let input_char_number_b = alphabet_key.find(input_char).unwrap();
 
         password = rotate_string(&password);
         output += &output_char.to_string();
-        alphabet_key = swap_chars(&alphabet_key, input_char_number_b, output_char_number);
+        alphabet_key = swap_chars(&alphabet_key, input_char_number_b, output_char_number as usize);
     }
     output
 }
