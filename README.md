@@ -7,6 +7,8 @@ The Hutton Cipher of [Eric Bond Hutton](https://old.reddit.com/u/EricBondHutton)
 ```rust
 extern crate hutton_rust;
 
+use hutton_rust::encrypt;
+
 fn main() {
   // the following 3 values must all consist of lowercase letters in the range [a-z]
   // else, panicc!
