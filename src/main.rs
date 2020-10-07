@@ -25,8 +25,8 @@ fn encrypt(input: &str, password: &str, key: &str) -> String {
     let abc = String::from("abcdefghijklmnopqrstuvwxyz");
     let mut alphabet_key = create_key(&key, &abc);
     let mut output = String::new();
-    for (i, c) in input.iter().enumerate() {
-
+    for (i, c) in input.char_indices() {
+        
     }
     abc
 }
