@@ -1,3 +1,5 @@
+use std::collections::HashSet; // for removing dupe chars from string
+
 fn main() {
     let input = String::from("foo");
     let output = swap_chars(&input, 0, 2);
@@ -5,6 +7,11 @@ fn main() {
 
     let input = String::from("foo");
     let output = rotate_string(&input);
+    println!("{}", output);
+
+    let input = String::from("foo");
+    let abc = String::from("abcdefghijklmnopqrstuvwxyz");
+    let output = create_key(&input, &abc);
     println!("{}", output);
 }
 
@@ -32,4 +39,15 @@ fn swap_chars(input: &str, i: usize, j: usize) -> String {
             _ => c,
         })
         .collect()
+}
+
+fn create_key(input: &str, abc: &str) -> String {
+    let mut a = input.chars().collect::<Vec<char>>();
+    let mut b = abc.chars().collect::<Vec<char>>();
+    a.append(&mut b);
+
+    let mut uniques = HashSet::new();
+    a.retain(|e| uniques.insert(e.clone()));
+
+    a.into_iter().collect()
 }
